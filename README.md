@@ -2,3 +2,5 @@
 Takes a number and translates it to words
 
 This is going to be written in python
+
+Should accept any real number
