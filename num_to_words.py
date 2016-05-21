@@ -1,4 +1,5 @@
 
+
 def is_number(n):
 	for m in str(n):
 		if m not in "1234567890.-":
