@@ -1,6 +1,7 @@
 # number_to_words
-Takes a number and translates it to words
+Takes a number and translates it to words. In python.
 
-This is going to be written in python
+Should accept any real number up to the trillions, including decimals.
+Accepts string input perfectly. Accepts int input perfectly. 
+Has problems with floating point numbers expressing in scientific notation.
 
-Should accept any real number
