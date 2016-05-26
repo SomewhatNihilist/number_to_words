@@ -90,7 +90,8 @@ def numbers_to_words_en(n):
 	n = abs(n)
 	m = 0.0
 	if not n - int(n) == 0:
-		m = n - int(n) #12.345 to 0.345
+		m = "{:.30f}".format(n - int(n)) #12.345 to "0.345"
+		m = m.rstrip("0")
 	n = str(int(n))
 	length = len(n)
 	tri = []
@@ -148,7 +149,8 @@ def numbers_to_words_es(n):
 	n = abs(n)
 	m = 0.0
 	if not n - int(n) == 0:
-		m = n - int(n) #12.345 a 0.345
+		m = "{:.30f}".format(n - int(n)) #12.345 a "0.345"
+		m = m.rstrip("0")
 	n = str(int(n))
 	length = len(n)
 	tri = []
@@ -168,7 +170,7 @@ def numbers_to_words_es(n):
 		elif lentri == 4: #Billones
 			if int(tri[i]) == 0:
 				continue
-			if tri[i] == '1':
+			if tri[i] == '1' or tri[i] == '001':
 				out = "un billon "
 			else:
 				out = out + sub_numbers_to_words_es(tri[i]) + "billones "
@@ -177,7 +179,7 @@ def numbers_to_words_es(n):
 		elif lentri == 3: #Millones
 			if int(tri[i]) == 0:
 				continue
-			if tri[i] == '1':
+			if tri[i] == '1' or tri[i] == '001':
 				out = "un millon "
 			else:
 				out = out + sub_numbers_to_words_es(tri[i]) + "millones "
@@ -186,7 +188,7 @@ def numbers_to_words_es(n):
 		elif lentri == 2: #Miles
 			if int(tri[i]) == 0:
 				continue
-			if tri[i] == '1':
+			if tri[i] == '1' or tri[i] == '001':
 				out = "mil "
 			else:
 				out = out + sub_numbers_to_words_es(tri[i]) + "mil "
@@ -208,7 +210,7 @@ def numbers_to_words_es(n):
 	out.rstrip()
 	return out
 
-#Test
+#Test, float input
 """
 while 1:
 	inp = float(raw_input("num: "))
@@ -216,7 +218,7 @@ while 1:
 	print numbers_to_words_en(inp)
 	print numbers_to_words_es(inp)
 """
-#Test2
+#Test2, string input
 """
 while 1:
 	inp = raw_input("num: ")
