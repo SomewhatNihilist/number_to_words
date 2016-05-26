@@ -171,7 +171,7 @@ def numbers_to_words_es(n):
 			if int(tri[i]) == 0:
 				continue
 			if tri[i] == '1' or tri[i] == '001':
-				out = "un billon "
+				out = out + "un billon "
 			else:
 				out = out + sub_numbers_to_words_es(tri[i]) + "billones "
 			lentri -= 1
@@ -180,7 +180,7 @@ def numbers_to_words_es(n):
 			if int(tri[i]) == 0:
 				continue
 			if tri[i] == '1' or tri[i] == '001':
-				out = "un millon "
+				out = out + "un millon "
 			else:
 				out = out + sub_numbers_to_words_es(tri[i]) + "millones "
 			lentri -= 1
@@ -189,7 +189,7 @@ def numbers_to_words_es(n):
 			if int(tri[i]) == 0:
 				continue
 			if tri[i] == '1' or tri[i] == '001':
-				out = "mil "
+				out = out + "mil "
 			else:
 				out = out + sub_numbers_to_words_es(tri[i]) + "mil "
 			lentri -= 1
@@ -222,6 +222,7 @@ while 1:
 """
 while 1:
 	inp = raw_input("num: ")
+	if inp == "exit": break
 	print numbers_to_words_en(inp)
 	print numbers_to_words_es(inp)
 """
