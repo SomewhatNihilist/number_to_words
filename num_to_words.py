@@ -2,9 +2,9 @@
 def is_number(n):
 	try: float(n)
 	except: return False
-	for m in str(n):
-		if m not in "1234567890.-":
-			return False
+	#for m in str(n):
+	#	if m not in "1234567890.-":
+	#		return False
 	return True
 
 def sub_numbers_to_words_en(n):
