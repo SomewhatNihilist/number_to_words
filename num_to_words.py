@@ -90,7 +90,7 @@ def numbers_to_words_en(n):
 	n = abs(n)
 	m = 0.0
 	if not n - int(n) == 0:
-		m = "{:.30f}".format(n - int(n)) #12.345 to "0.345"
+		m = "{:.10f}".format(n - int(n)) #12.345 to "0.345"
 		m = m.rstrip("0")
 	n = str(int(n))
 	length = len(n)
@@ -100,31 +100,15 @@ def numbers_to_words_en(n):
 		tri.append(n[-3:])
 		n = n[:-3]
 	lentri = len(tri)
+	singular = ["", "thousand ", "million ", "billion ", "trillion ", "quadrillion ", "quintillion "]
+	if lentri > len(singular):
+		return "NumberTooLong"
 	for i in range(lentri-1, -1, -1):
-		if lentri == 5: #Trillions
-			out = sub_numbers_to_words_en(tri[i]) + "trillion "
+		if int(tri[i]) == 0:
 			lentri -= 1
 			continue
-		elif lentri == 4: #Billions
-			if int(tri[i]) == 0:
-				continue
-			out = out + sub_numbers_to_words_en(tri[i]) + "billion "
-			lentri -= 1
-			continue
-		elif lentri == 3: #Millions
-			if int(tri[i]) == 0:
-				continue
-			out = out + sub_numbers_to_words_en(tri[i]) + "million "
-			lentri -= 1
-			continue
-		elif lentri == 2: #Thousands
-			if int(tri[i]) == 0:
-				continue
-			out = out + sub_numbers_to_words_en(tri[i]) + "thousand "
-			lentri -= 1
-			continue
-		else: #Units
-			out = out + sub_numbers_to_words_en(tri[i])
+		out = out + sub_numbers_to_words_en(tri[i]) + singular[lentri-1]
+		lentri -= 1
 	if m:
 		if out == "":
 			out = "zero "
@@ -133,6 +117,7 @@ def numbers_to_words_en(n):
 		for i in m:
 			if i == "0":
 				out = out + "zero "
+				continue
 			out = out + sub_numbers_to_words_en(i)
 	if sing < 0:
 		out = "minus " + out
@@ -159,44 +144,25 @@ def numbers_to_words_es(n):
 		tri.append(n[-3:])
 		n = n[:-3]
 	lentri = len(tri)
-	for i in range(lentri-1, -1, -1):
-		if lentri == 5: #Trillones
-			if tri[i] == '1':
-				out = "un trillon "
-			else:
-				out = sub_numbers_to_words_es(tri[i]) + "trillones "
+	plural = ["", "mil ", "millones ", "billones ", "trillones "]
+	singular = ["", "mil ", "millon ", "billon ", "trillon "]
+	if lentri > len(plural):
+		return "NumberTooLong"
+	for i in range(lentri-1, -1, -1): #Parte entera
+		if int(tri[i]) == 0:
 			lentri -= 1
 			continue
-		elif lentri == 4: #Billones
-			if int(tri[i]) == 0:
-				continue
-			if tri[i] == '1' or tri[i] == '001':
-				out = out + "un billon "
-			else:
-				out = out + sub_numbers_to_words_es(tri[i]) + "billones "
-			lentri -= 1
-			continue
-		elif lentri == 3: #Millones
-			if int(tri[i]) == 0:
-				continue
-			if tri[i] == '1' or tri[i] == '001':
-				out = out + "un millon "
-			else:
-				out = out + sub_numbers_to_words_es(tri[i]) + "millones "
-			lentri -= 1
-			continue
-		elif lentri == 2: #Miles
-			if int(tri[i]) == 0:
-				continue
-			if tri[i] == '1' or tri[i] == '001':
+		elif (tri[i] == '1' or tri[i] == '001'):
+			if lentri > 2:
+				out = out + "un " + singular[lentri-1]
+			elif lentri == 2:
 				out = out + "mil "
 			else:
-				out = out + sub_numbers_to_words_es(tri[i]) + "mil "
-			lentri -= 1
-			continue #Es esto reundante?
-		else: #Unidades
-			out = out + sub_numbers_to_words_es(tri[i])
-	if m:
+				out = out + "uno "
+		else:
+			out = out + sub_numbers_to_words_es(tri[i]) + plural[lentri-1]
+		lentri -= 1
+	if m: #Parte decimal
 		if out == "":
 			out = "cero "
 		out = out + "punto "
@@ -204,6 +170,7 @@ def numbers_to_words_es(n):
 		for i in m:
 			if i == "0":
 				out = out + "cero "
+				continue
 			out = out + sub_numbers_to_words_es(i)
 	if sing < 0:
 		out = "menos " + out
